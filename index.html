@@ -1,477 +1,410 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Karuna's Birthday</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;700&family=Caveat:wght@500;700&display=swap">
-<style>
-  /* Layout: one night-sky column. Big italic serif name, falling hearts and balloons behind, letter set as handwriting on a soft panel. */
-  :root {
-    --night: #140a1c;
-    --plum: #2a1233;
-    --rose: #ff6f8e;
-    --blush: #ffd9e0;
-    --gold: #f5c26b;
-    --mist: #cdbbdb;
-    --line: rgba(255, 217, 224, 0.16);
-    --f-display: "Instrument Serif", "Times New Roman", serif;
-    --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --f-hand: "Caveat", "Bradley Hand", cursive;
-    color-scheme: dark;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: radial-gradient(1200px 700px at 50% -10%, #3a1747 0%, var(--night) 60%) fixed, var(--night);
-    color: var(--blush);
-    font-family: var(--f-body);
-    font-size: 17px;
-    line-height: 1.65;
-    overflow-x: hidden;
-  }
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
-    position: relative;
-    z-index: 2;
-  }
-  section { padding-block: 72px; }
-  h1, h2 { font-family: var(--f-display); font-weight: 400; margin: 0; text-wrap: balance; }
-  .eyebrow {
-    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin: 0 0 18px;
-  }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>For Karuna — 26 November ❤️</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='52'%3E%F0%9F%8E%81%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="app" class="app" data-scene="0">
+      <!-- Persistent starry dark cosmic background & canvas -->
+      <div id="cosmic-bg" class="cosmic-bg" aria-hidden="true"></div>
+      <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
 
-  /* background layers */
-  #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-  .sky { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-  .heart {
-    position: absolute; bottom: -40px; color: var(--rose); opacity: 0;
-    animation: rise linear infinite;
-  }
-  @keyframes rise {
-    0% { transform: translateY(0) translateX(0) scale(0.7); opacity: 0; }
-    12% { opacity: 0.55; }
-    50% { transform: translateY(-55vh) translateX(18px) scale(1); }
-    100% { transform: translateY(-115vh) translateX(-14px) scale(1.1); opacity: 0; }
-  }
-  .balloon {
-    position: absolute; bottom: -160px; width: 46px; height: 58px; border-radius: 50% 50% 48% 48%;
-    opacity: 0.9; animation: float linear infinite;
-  }
-  .balloon::after {
-    content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 70px; background: rgba(255,255,255,0.35);
-  }
-  .balloon::before {
-    content: ""; position: absolute; left: 11px; top: 9px; width: 9px; height: 15px; border-radius: 50%;
-    background: rgba(255,255,255,0.35); transform: rotate(20deg);
-  }
-  @keyframes float {
-    0% { transform: translateY(0) rotate(-4deg); }
-    50% { transform: translateY(-60vh) rotate(5deg); }
-    100% { transform: translateY(-135vh) rotate(-4deg); }
-  }
+      <!-- Hidden-in-viewport YouTube music host & floating music pill -->
+      <div id="yt-music-host" class="yt-music-host" aria-hidden="true">
+        <div id="yt-player"></div>
+      </div>
+      <button id="music-pill" class="music-pill" type="button" aria-label="Toggle background music">
+        <span class="music-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span id="music-pill-label" class="music-pill-label">You &amp; I · One Direction</span>
+      </button>
 
-  /* hero */
-  .hero { padding-top: 88px; padding-bottom: 56px; text-align: left; }
-  .hero h1 { font-size: clamp(3.4rem, 15vw, 7.5rem); line-height: 0.95; letter-spacing: -0.01em; }
-  .hero h1 em { color: var(--rose); font-style: italic; display: block; }
-  .hero .date { margin-top: 26px; font-size: 1.05rem; color: var(--mist); max-width: 34ch; }
-  .cta {
-    margin-top: 34px; display: inline-flex; align-items: center; gap: 10px;
-    background: var(--rose); color: #2a0d1a; border: 0; border-radius: 999px;
-    padding: 15px 26px; font: 700 15px var(--f-body); cursor: pointer;
-    box-shadow: 0 10px 30px -10px rgba(255, 111, 142, 0.7);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .cta:hover { transform: translateY(-2px); }
-  .cta:focus-visible, .music:focus-visible, .wish:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+      <!-- Scene 0: Floral & Bokeh Splash -->
+      <section id="scene-0" class="scene scene-0 is-active" aria-label="Floral opening">
+        <canvas id="floral-canvas" class="fullscreen-canvas"></canvas>
+      </section>
 
-  .countdown { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
-  .countdown div { min-width: 74px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(42, 18, 51, 0.6); }
-  .countdown b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
-  .countdown span { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mist); }
-  .cd-note { margin: 14px 0 0; color: var(--mist); font-size: 0.95rem; }
+      <!-- Scene 1: Unwrap Gift Card -->
+      <section id="scene-1" class="scene scene-1" aria-label="Unwrap surprise">
+        <div class="unwrap-card">
+          <div class="gift-icon-wrap" aria-hidden="true">
+            <svg class="gift-svg" viewBox="0 0 96 96" fill="none">
+              <defs>
+                <linearGradient id="boxBody" x1="16" y1="38" x2="80" y2="86" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#f7c87d" />
+                  <stop offset="100%" stop-color="#d7873f" />
+                </linearGradient>
+                <linearGradient id="boxLid" x1="14" y1="26" x2="82" y2="42" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#ffe1a8" />
+                  <stop offset="100%" stop-color="#e29c52" />
+                </linearGradient>
+                <linearGradient id="ribbonGrad" x1="38" y1="14" x2="58" y2="86" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#ff8d87" />
+                  <stop offset="100%" stop-color="#db4459" />
+                </linearGradient>
+              </defs>
+              <ellipse cx="48" cy="84" rx="28" ry="5" fill="#000000" fill-opacity="0.32" />
+              <rect x="20" y="39" width="56" height="42" rx="6" fill="url(#boxBody)" />
+              <rect x="20" y="39" width="56" height="4" fill="#000000" fill-opacity="0.16" />
+              <rect x="43" y="39" width="10" height="42" fill="url(#ribbonGrad)" />
+              <rect x="16" y="29" width="64" height="12" rx="4" fill="url(#boxLid)" />
+              <rect x="43" y="29" width="10" height="12" fill="url(#ribbonGrad)" />
+              <path
+                d="M47 29C42 15 26 14 26 24C26 30 40 30 47 29Z"
+                fill="url(#ribbonGrad)"
+                stroke="#ffada8"
+                stroke-width="1"
+              />
+              <path
+                d="M49 29C54 15 70 14 70 24C70 30 56 30 49 29Z"
+                fill="url(#ribbonGrad)"
+                stroke="#ffada8"
+                stroke-width="1"
+              />
+              <circle cx="48" cy="28" r="5" fill="#e65365" stroke="#ffb7b2" stroke-width="1" />
+            </svg>
+          </div>
+          <p class="unwrap-kicker">A SURPRISE FOR</p>
+          <h1 class="unwrap-name" data-recipient>Karuna</h1>
+          <p class="unwrap-subtitle">
+            <span data-birthday-date>26 November</span> · <span data-years>8</span> years of feelings, finally put into words.
+          </p>
+          <button id="unwrap-btn" class="primary-pill-btn unwrap-btn" type="button">
+            Unwrap it
+          </button>
+          <p class="sound-hint">🔊 Sound on for the full magic</p>
+        </div>
+      </section>
 
-  /* cake */
-  .cake-block { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; justify-items: center; text-align: center; }
-  .cake-block h2 { font-size: clamp(2rem, 7vw, 3.2rem); }
-  .cake { width: min(300px, 80%); height: auto; overflow: visible; }
-  .flame { transform-origin: 50% 100%; animation: flick 0.9s ease-in-out infinite alternate; transform-box: fill-box; }
-  .flame:nth-of-type(2) { animation-delay: 0.2s; }
-  .flame:nth-of-type(3) { animation-delay: 0.45s; }
-  @keyframes flick { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(0.88, 1.12) rotate(3deg); } }
-  .out .flame { display: none; }
-  .smoke { opacity: 0; }
-  .out .smoke { animation: smoke 2.4s ease-out forwards; }
-  @keyframes smoke { 0% { opacity: 0.7; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-34px); } }
-  .wish {
-    border: 1px solid var(--gold); background: transparent; color: var(--gold); border-radius: 999px;
-    padding: 12px 24px; font: 700 14px var(--f-body); letter-spacing: 0.06em; cursor: pointer;
-  }
-  .wish:hover { background: rgba(245, 194, 107, 0.12); }
-  .wish-msg { min-height: 3.4em; color: var(--blush); font-family: var(--f-hand); font-size: 1.7rem; line-height: 1.25; margin: 0; max-width: 28ch; }
+      <!-- Scene 2: Cupid's Bow & Heart -->
+      <section id="scene-2" class="scene scene-2" aria-label="Cupid arrow interaction">
+        <p class="cupid-subtitle">a little something, for you</p>
 
-  /* eight years */
-  .years { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .years h2 { font-size: clamp(2.2rem, 8vw, 3.8rem); }
-  .years h2 em { color: var(--rose); }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 22px 28px; margin-top: 34px; }
-  .stats div { border-left: 2px solid var(--rose); padding-left: 14px; }
-  .stats b { font-family: var(--f-display); font-weight: 400; font-size: 2.3rem; line-height: 1; display: block; font-variant-numeric: tabular-nums; }
-  .stats span { color: var(--mist); font-size: 0.92rem; }
+        <div id="cupid-heart-stage" class="cupid-heart-stage">
+          <div class="heart-aura" aria-hidden="true"></div>
+          <div id="cupid-heart" class="cupid-heart">
+            <svg viewBox="0 0 180 165" class="heart-3d-svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="heart3dGrad" cx="34%" cy="28%" r="75%">
+                  <stop offset="0%" stop-color="#ff9fb0" />
+                  <stop offset="32%" stop-color="#f84f6c" />
+                  <stop offset="78%" stop-color="#d7213e" />
+                  <stop offset="100%" stop-color="#9e1129" />
+                </radialGradient>
+                <filter id="heartDrop" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#d92b4a" flood-opacity="0.38" />
+                </filter>
+              </defs>
+              <path
+                d="M90 150C90 150 18 106 18 52C18 26 38 10 61 10C75 10 85 18 90 27C95 18 105 10 119 10C142 10 162 26 162 52C162 106 90 150 90 150Z"
+                fill="url(#heart3dGrad)"
+                filter="url(#heartDrop)"
+              />
+              <ellipse
+                cx="52"
+                cy="39"
+                rx="14"
+                ry="8"
+                transform="rotate(-30 52 39)"
+                fill="#ffffff"
+                fill-opacity="0.35"
+              />
+            </svg>
+          </div>
+        </div>
 
-  /* gallery */
-  .gallery h2 { font-size: clamp(2rem, 7vw, 3.2rem); margin-bottom: 28px; }
-  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-  .shots figure { margin: 0; min-width: 0; }
-  .shots img {
-    display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 16px;
-    border: 1px solid var(--line); box-shadow: 0 24px 50px -26px rgba(0, 0, 0, 0.9);
-  }
-  .shots figure:nth-child(1) img { object-position: 50% 30%; }
-  .shots figcaption { margin-top: 10px; font-family: var(--f-hand); font-size: 1.45rem; color: var(--gold); }
+        <canvas id="cupid-canvas" class="fullscreen-canvas"></canvas>
+        <p id="cupid-hint" class="cupid-hint">PULL &amp; RELEASE</p>
+        <div id="crimson-reveal" class="crimson-reveal" aria-hidden="true"></div>
+      </section>
 
-  /* letter */
-  .letter {
-    background: linear-gradient(180deg, rgba(58, 23, 71, 0.75), rgba(42, 18, 51, 0.75));
-    border: 1px solid var(--line); border-radius: 22px; padding: clamp(24px, 6vw, 48px);
-    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8);
-  }
-  .letter h2 { font-size: clamp(2rem, 7vw, 3rem); margin-bottom: 22px; }
-  .letter p { font-family: var(--f-hand); font-size: clamp(1.45rem, 4.6vw, 1.85rem); line-height: 1.4; margin: 0 0 18px; color: #fff0f3; }
-  .letter .sign { margin-top: 28px; color: var(--gold); }
+      <!-- Scene 3: Crimson Happy Birthday Splash -->
+      <section id="scene-3" class="scene scene-3" aria-label="Happy birthday greeting">
+        <div class="crimson-content">
+          <p class="crimson-kicker"><span data-birthday-date>26 November</span> · make a wish...</p>
+          <h2 class="crimson-headline">
+            <span class="crimson-word word-1">Happy</span>
+            <span class="crimson-word word-2">Birthday</span>
+          </h2>
+          <svg class="gold-loop-svg" viewBox="0 0 360 72" fill="none" aria-hidden="true">
+            <path
+              id="gold-loop-path"
+              d="M36 32 C 110 10, 275 8, 326 30 C 350 40, 315 62, 182 59 C 72 56, 22 44, 48 25 C 88 8, 232 10, 296 22"
+              stroke="#f6c945"
+              stroke-width="3.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <p class="crimson-sub">to the day my favorite soul was born</p>
+        </div>
+      </section>
 
-  /* importance */
-  .because h2 { font-size: clamp(2rem, 7vw, 3.2rem); margin-bottom: 26px; }
-  .because ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-  .because li { padding: 22px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
-  .because li:last-child { border-bottom: 1px solid var(--line); }
-  .because strong { font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: clamp(1.5rem, 5vw, 2rem); color: var(--rose); }
-  .because li span { color: var(--mist); max-width: 52ch; }
+      <!-- Scene 4: Blooming Heart Tree -->
+      <section id="scene-4" class="scene scene-4" aria-label="Blooming heart tree">
+        <canvas id="tree-canvas" class="fullscreen-canvas"></canvas>
+        <div class="tree-copy">
+          <p class="tree-kicker"><span data-birthday-date>26 November</span> · it's officially your day</p>
+          <h2 class="tree-title">
+            Happy Birthday,<br />
+            <span data-recipient>Karuna</span>
+          </h2>
+          <p class="tree-age">
+            <span data-years>8</span> years of loving you quietly, and my heart still chooses you ✨
+          </p>
+        </div>
+        <p id="tree-continue-hint" class="tree-continue-hint">TAP ANYWHERE TO CONTINUE</p>
+      </section>
 
-  .end { text-align: center; padding-bottom: 130px; }
-  .end h2 { font-size: clamp(2.4rem, 9vw, 4.4rem); }
-  .end p { color: var(--mist); }
+      <!-- Scene 5: Interactive Cake Baking & Candle -->
+      <section id="scene-5" class="scene scene-5" aria-label="Birthday cake">
+        <canvas id="cake-confetti-canvas" class="fullscreen-canvas"></canvas>
+        <div id="cake-warm-glow" class="cake-warm-glow" aria-hidden="true"></div>
+        <div class="cake-scene-inner">
+          <p class="cake-header">First things first 🎂</p>
+          <div id="cake-stage" class="cake-stage">
+            <div id="cake-beam" class="cake-beam"></div>
 
-  .music {
-    position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-    z-index: 10; display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(20, 10, 28, 0.88); color: var(--blush); border: 1px solid var(--line);
-    border-radius: 999px; padding: 11px 18px; font: 700 13px var(--f-body); cursor: pointer;
-    backdrop-filter: blur(8px);
-  }
-  .music .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
-  .music .bars i { width: 3px; background: var(--rose); height: 4px; border-radius: 1px; }
-  .music.on .bars i { animation: eq 0.9s ease-in-out infinite alternate; }
-  .music.on .bars i:nth-child(2) { animation-delay: 0.2s; }
-  .music.on .bars i:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes eq { from { height: 3px; } to { height: 14px; } }
+            <div id="cake-assembly" class="cake-assembly">
+              <div id="cake-candle" class="cake-candle">
+                <div id="cake-flame-wrap" class="cake-flame-wrap">
+                  <div class="flame-halo"></div>
+                  <div class="flame-outer"></div>
+                  <div class="flame-inner"></div>
+                </div>
+                <div class="candle-wick"></div>
+                <div class="candle-body"></div>
+              </div>
 
-  @media (prefers-reduced-motion: reduce) {
-    .heart, .balloon, .flame, .music .bars i { animation: none !important; }
-    .heart, .balloon { display: none; }
-    html { scroll-behavior: auto; }
-  }
-</style>
+              <div id="cake-icing" class="cake-icing">
+                <svg class="icing-svg" viewBox="0 0 216 44" preserveAspectRatio="none">
+                  <path
+                    d="M0 10 C0 3 10 0 18 0 L198 0 C206 0 216 3 216 10 L216 20 C210 26 203 24 199 17 C194 28 186 38 181 38 C176 38 172 23 166 19 C159 25 151 30 144 26 C137 22 132 34 126 34 C120 34 115 21 108 18 C101 24 94 27 87 22 C80 28 74 41 68 41 C62 41 58 26 51 20 C44 25 36 28 29 22 C22 28 15 31 9 24 C4 20 0 20 0 16 Z"
+                    fill="#fffaf3"
+                  />
+                </svg>
+              </div>
 
-<canvas id="fx" aria-hidden="true"></canvas>
-<div class="sky" id="sky" aria-hidden="true"></div>
+              <div id="cake-layer-top" class="cake-layer cake-layer-top"></div>
+              <div id="cake-filling" class="cake-filling"></div>
+              <div id="cake-layer-bottom" class="cake-layer cake-layer-bottom"></div>
 
-<main class="wrap">
-  <section class="hero">
-    <p class="eyebrow">26 November</p>
-    <h1>Happy Birthday,<em>Karuna</em></h1>
-    <p class="date">This page was made for one person. Turn the music on and take your time.</p>
-    <button class="cta" id="open" type="button">Open your surprise <span aria-hidden="true">&rarr;</span></button>
+              <div id="cake-plate" class="cake-plate">
+                <div class="plate-rim"></div>
+              </div>
+            </div>
+          </div>
 
-    <div class="countdown" id="countdown" aria-live="off">
-      <div><b id="cd-d">0</b><span>days</span></div>
-      <div><b id="cd-h">0</b><span>hours</span></div>
-      <div><b id="cd-m">0</b><span>minutes</span></div>
-      <div><b id="cd-s">0</b><span>seconds</span></div>
-    </div>
-    <p class="cd-note" id="cd-note">until your birthday</p>
-  </section>
+          <div id="cake-status-box" class="cake-status-box">
+            <p id="cake-status-title" class="cake-status-title">Baking something sweet...</p>
+            <p id="cake-status-sub" class="cake-status-sub"></p>
+            <p id="cake-tap-hint" class="cake-tap-hint">Tap anywhere to continue</p>
+          </div>
+        </div>
+      </section>
 
-  <section class="cake-block" id="cake">
-    <h2>Make a wish, Karuna</h2>
-    <svg class="cake" id="cakeSvg" viewBox="0 0 300 260" role="img" aria-label="A birthday cake with three lit candles">
-      <ellipse cx="150" cy="238" rx="130" ry="14" fill="#000" opacity="0.35"/>
-      <rect x="40" y="150" width="220" height="84" rx="12" fill="#ff6f8e"/>
-      <rect x="40" y="150" width="220" height="22" rx="11" fill="#ffd9e0"/>
-      <path d="M40 172 q14 26 28 0 q14 30 28 0 q14 26 28 0 q14 30 28 0 q14 26 28 0 q14 30 28 0 q14 26 28 0 v-8 h-196z" fill="#ffd9e0"/>
-      <rect x="70" y="100" width="160" height="56" rx="10" fill="#c4456a"/>
-      <rect x="70" y="100" width="160" height="16" rx="8" fill="#ffd9e0"/>
-      <g fill="#f5c26b">
-        <rect x="108" y="66" width="8" height="38" rx="2"/>
-        <rect x="146" y="58" width="8" height="46" rx="2"/>
-        <rect x="184" y="66" width="8" height="38" rx="2"/>
-      </g>
-      <g fill="#ffb347">
-        <path class="flame" d="M112 62 c-9 -12 -2 -22 0 -30 c3 8 10 16 0 30z"/>
-        <path class="flame" d="M150 54 c-9 -12 -2 -22 0 -30 c3 8 10 16 0 30z"/>
-        <path class="flame" d="M188 62 c-9 -12 -2 -22 0 -30 c3 8 10 16 0 30z"/>
-      </g>
-      <g class="smoke" stroke="#cdbbdb" stroke-width="2" fill="none" stroke-linecap="round">
-        <path d="M112 60 q-6 -8 0 -16"/><path d="M150 52 q-6 -8 0 -16"/><path d="M188 60 q-6 -8 0 -16"/>
-      </g>
-    </svg>
-    <button class="wish" id="wishBtn" type="button">Blow out the candles</button>
-    <p class="wish-msg" id="wishMsg">Close your eyes, think of your wish, then tap the button.</p>
-  </section>
+      <!-- Scene 6: Pop the 5 Balloons -->
+      <section id="scene-6" class="scene scene-6" aria-label="Pop the balloons">
+        <canvas id="balloon-confetti-canvas" class="fullscreen-canvas"></canvas>
+        <div class="balloons-layout">
+          <header class="scene-header">
+            <h2 class="scene-title">Pop the balloons 🎈</h2>
+            <p class="scene-subtitle">
+              5 balloons. 5 pieces of the <span data-years>8</span> years I've loved you. Pop them all 🎈
+            </p>
+          </header>
 
-  <section class="years">
-    <p class="eyebrow">Something I have never said</p>
-    <h2>Eight years of quietly thinking <em>of you</em></h2>
-    <div class="stats">
-      <div><b id="st-days">2,922</b><span>days since I first noticed you</span></div>
-      <div><b>96</b><span>months of the same smile in my head</span></div>
-      <div><b>8</b><span>birthdays I wished I could wish you in person</span></div>
-    </div>
-  </section>
+          <div id="balloons-rack" class="balloons-rack"></div>
+          <div id="reasons-stack" class="reasons-stack"></div>
+          <p id="reasons-closing" class="reasons-closing">
+            ...<span data-years>8</span> years of loving you, and a lifetime more to go 💛
+          </p>
+        </div>
+      </section>
 
-  <section class="gallery">
-    <p class="eyebrow">The face behind my best days</p>
-    <h2>Karuna</h2>
-    <div class="shots">
-      <figure><img src="photo1.jpg" alt="Karuna resting her chin on her hand in soft light"><figcaption>Quiet and lovely</figcaption></figure>
-      <figure><img src="photo2.jpg" alt="Karuna in a dark green shirt taking a mirror selfie"><figcaption>Effortlessly you</figcaption></figure>
-      <figure><img src="photo3.jpg" alt="Karuna in a blue and gold traditional outfit"><figcaption>Beautiful, always</figcaption></figure>
-    </div>
-  </section>
+      <!-- Scene 7: Memory Lane Polaroids (Karuna's photos & poetry card) -->
+      <section id="scene-7" class="scene scene-7" aria-label="Memory lane">
+        <div class="memory-layout">
+          <header class="scene-header">
+            <h2 class="scene-title">A walk down memory lane</h2>
+            <p class="scene-subtitle memory-sub">swipe through 🤍</p>
+          </header>
 
-  <section id="letter">
-    <article class="letter">
-      <p class="eyebrow">A letter for 26 November</p>
-      <h2>Dear Karuna,</h2>
-      <p>I have written this letter in my head more times than I can count. This is the first time I am letting it out.</p>
-      <p>Eight years ago I noticed you, and something in me settled. I did not know it would last this long. I only knew your name felt different when I said it. Eight years later, it still does.</p>
-      <p>In all this time I have never stopped admiring you. The way you carry yourself. The calm you bring into a room without trying. The small things I learned to notice, because noticing you became a habit I never wanted to break.</p>
-      <p>You matter to me more than I have ever managed to say. You are the first thought on good days and the quiet comfort on hard ones. Somewhere along the way you became the measure I use for what kindness, grace and beauty look like.</p>
-      <p>Whatever you decide to do with this, I wanted you to know that for eight years someone has been quietly, steadily, completely glad that you exist.</p>
-      <p>Happy Birthday, Karuna. May this year give you everything you give to the world, and more.</p>
-      <p class="sign">With all my heart, <span id="from">always yours</span></p>
-    </article>
-  </section>
+          <div id="memory-stage" class="memory-stage">
+            <svg class="fairy-wire-svg" viewBox="0 0 1400 120" preserveAspectRatio="none" aria-hidden="true">
+              <path
+                d="M-20 26 Q 350 56, 700 44 T 1420 26"
+                fill="none"
+                stroke="rgba(246, 200, 110, 0.55)"
+                stroke-width="2"
+              />
+            </svg>
+            <div id="fairy-bulbs" class="fairy-bulbs" aria-hidden="true"></div>
+            <div id="polaroid-track" class="polaroid-track"></div>
+          </div>
 
-  <section class="because">
-    <p class="eyebrow">What you are to me</p>
-    <h2>Why you are so important</h2>
-    <ul>
-      <li><strong>You are my calm.</strong><span>Thinking of you slows everything down and makes the day feel kinder.</span></li>
-      <li><strong>You are my reason to smile.</strong><span>Your name alone can change my mood, and it has done that for eight years.</span></li>
-      <li><strong>You are the person I hope for.</strong><span>Every birthday, every new year, every wish I make still has you somewhere in it.</span></li>
-    </ul>
-  </section>
+          <div id="memory-dots" class="memory-dots" role="tablist" aria-label="Memories"></div>
 
-  <section class="end">
-    <h2>Happy Birthday, Karuna.</h2>
-    <p>26 November. A day the world got someone lovely.</p>
-    <button class="cta" id="again" type="button">Celebrate again <span aria-hidden="true">&#9829;</span></button>
-  </section>
-</main>
+          <button id="memory-continue-btn" class="primary-pill-btn memory-continue-btn" type="button">
+            Keep going
+          </button>
+        </div>
+      </section>
 
-<button class="music" id="music" type="button" aria-pressed="false" aria-label="Play music">
-  <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
-  <span id="musicLabel">Play music</span>
-</button>
+      <!-- Scene 8: Poetry & Videos Showcase -->
+      <section id="scene-8" class="scene scene-8" aria-label="Poetry and birthday videos">
+        <div class="poetry-videos-layout">
+          <header class="scene-header poetry-header">
+            <h2 class="scene-title">In poetry &amp; melody, for you</h2>
+            <p class="scene-subtitle">
+              <span data-birthday-date>26 November</span> · tap play &amp; listen closely 🤍
+            </p>
+          </header>
 
-<script>
-(function () {
-  "use strict";
+          <article class="poetry-highlight-card">
+            <p class="poetry-intro">In English they say: “Happy Birthday” — but in poetry we say:</p>
+            <blockquote class="poetry-quote">
+              “Today isn't just your day, it's the day my favorite soul was born.”
+            </blockquote>
+          </article>
 
-  // Edit these two lines to personalise the page.
-  var SENDER = "";          // e.g. "Ali". Leave empty to sign off "always yours".
-  var BIRTH_MONTH = 10, BIRTH_DAY = 26;   // month is 0-based: 10 = November
+          <div class="videos-grid">
+            <div class="video-card">
+              <span class="video-tag">SHAYARI FOR YOU 👑</span>
+              <div class="video-frame">
+                <video
+                  id="video-shayari"
+                  src="./assets/video-shayari.mp4"
+                  controls
+                  playsinline
+                  preload="metadata"
+                ></video>
+              </div>
+              <p class="video-title">Happy Birthday, Meri Pasandida Aurat ❤️</p>
+              <p class="video-subquote">“Chaand tukda hai tumhara...”</p>
+            </div>
 
-  if (SENDER) document.getElementById("from").textContent = SENDER;
+            <div class="video-card">
+              <span class="video-tag">8 YEARS OF FEELINGS ✨</span>
+              <div class="video-frame">
+                <video
+                  id="video-birthday"
+                  src="./assets/video-birthday.mp4"
+                  controls
+                  playsinline
+                  preload="metadata"
+                ></video>
+              </div>
+              <p class="video-title">Every moment I dream of sharing with you 💛</p>
+              <p class="video-subquote">“Duniya meri humdum...”</p>
+            </div>
+          </div>
 
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          <button id="poetry-continue-btn" class="primary-pill-btn poetry-continue-btn" type="button">
+            Read my confession 💌
+          </button>
+        </div>
+      </section>
 
-  /* ---------- floating hearts and balloons ---------- */
-  var sky = document.getElementById("sky");
-  var balloonColors = ["#ff6f8e", "#f5c26b", "#b57cff", "#6fd3ff", "#ff9ec0"];
-  if (!reduce) {
-    for (var i = 0; i < 16; i++) {
-      var h = document.createElement("span");
-      h.className = "heart";
-      h.textContent = "♥";
-      h.style.left = (Math.random() * 96) + "%";
-      h.style.fontSize = (12 + Math.random() * 22) + "px";
-      h.style.animationDuration = (11 + Math.random() * 12) + "s";
-      h.style.animationDelay = (-Math.random() * 20) + "s";
-      sky.appendChild(h);
-    }
-    for (var j = 0; j < 7; j++) {
-      var b = document.createElement("span");
-      b.className = "balloon";
-      b.style.left = (4 + Math.random() * 88) + "%";
-      b.style.background = balloonColors[j % balloonColors.length];
-      b.style.animationDuration = (22 + Math.random() * 14) + "s";
-      b.style.animationDelay = (-Math.random() * 30) + "s";
-      sky.appendChild(b);
-    }
-  }
+      <!-- Scene 9: Wax-Sealed Envelope & 8-Year Confession Letter -->
+      <section id="scene-9" class="scene scene-9" aria-label="Birthday confession letter">
+        <div class="letter-scene-inner">
+          <header id="letter-header" class="scene-header">
+            <h2 class="scene-title">One last thing, <span data-recipient>Karuna</span>...</h2>
+            <p class="scene-subtitle">
+              A confession I've held in my heart for <span data-years>8</span> years.
+            </p>
+          </header>
 
-  /* ---------- confetti ---------- */
-  var cv = document.getElementById("fx"), cx = cv.getContext("2d");
-  var parts = [], running = false;
-  function size() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
-  size(); window.addEventListener("resize", size);
-  var palette = ["#ff6f8e", "#f5c26b", "#ffd9e0", "#b57cff", "#6fd3ff", "#ffffff"];
-  function burst(n, ox, oy) {
-    if (reduce) return;
-    for (var k = 0; k < n; k++) {
-      var a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 9;
-      parts.push({
-        x: ox, y: oy, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6,
-        w: 6 + Math.random() * 6, h: 4 + Math.random() * 5, r: Math.random() * 6,
-        vr: (Math.random() - 0.5) * 0.4, c: palette[(Math.random() * palette.length) | 0],
-        life: 140 + Math.random() * 80, heart: Math.random() < 0.25
-      });
-    }
-    if (!running) { running = true; requestAnimationFrame(tick); }
-  }
-  function tick() {
-    cx.clearRect(0, 0, cv.width, cv.height);
-    for (var k = parts.length - 1; k >= 0; k--) {
-      var p = parts[k];
-      p.vy += 0.22; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life--;
-      if (p.life <= 0 || p.y > cv.height + 30) { parts.splice(k, 1); continue; }
-      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r);
-      cx.globalAlpha = Math.min(1, p.life / 40);
-      cx.fillStyle = p.c;
-      if (p.heart) { cx.font = "16px sans-serif"; cx.fillText("♥", -6, 6); }
-      else cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      cx.restore();
-    }
-    if (parts.length) requestAnimationFrame(tick);
-    else { running = false; cx.clearRect(0, 0, cv.width, cv.height); }
-  }
-  function bigBurst() {
-    var w = window.innerWidth, hgt = window.innerHeight;
-    burst(90, w * 0.25, hgt * 0.55);
-    burst(90, w * 0.75, hgt * 0.55);
-    setTimeout(function () { burst(100, w * 0.5, hgt * 0.4); }, 350);
-  }
+          <div id="envelope-stage" class="envelope-stage">
+            <button id="envelope-btn" class="envelope-btn" type="button" aria-label="Open birthday confession letter">
+              <div class="envelope-3d">
+                <div class="envelope-back"></div>
+                <div class="envelope-letter-peek">
+                  <span class="peek-heart">💌</span>
+                </div>
+                <div class="envelope-flap-left"></div>
+                <div class="envelope-flap-right"></div>
+                <div class="envelope-flap-bottom"></div>
+                <div class="envelope-flap-top"></div>
+                <div class="wax-seal">
+                  <span class="wax-letter">K</span>
+                </div>
+              </div>
+            </button>
+            <p id="envelope-hint" class="envelope-hint">👆 Tap to open my heart</p>
+          </div>
 
-  /* ---------- countdown ---------- */
-  var now0 = new Date();
-  var target = new Date(now0.getFullYear(), BIRTH_MONTH, BIRTH_DAY, 0, 0, 0);
-  var dayEnd = new Date(now0.getFullYear(), BIRTH_MONTH, BIRTH_DAY + 1, 0, 0, 0);
-  if (now0 >= dayEnd) target = new Date(now0.getFullYear() + 1, BIRTH_MONTH, BIRTH_DAY, 0, 0, 0);
-  var elD = document.getElementById("cd-d"), elH = document.getElementById("cd-h"),
-      elM = document.getElementById("cd-m"), elS = document.getElementById("cd-s"),
-      note = document.getElementById("cd-note");
-  function pad(n) { return n < 10 ? "0" + n : "" + n; }
-  function cd() {
-    var now = new Date(), diff = target - now;
-    if (diff <= 0) {
-      elD.textContent = "0"; elH.textContent = "00"; elM.textContent = "00"; elS.textContent = "00";
-      note.textContent = "Today is your day, Karuna.";
-      return;
-    }
-    var s = Math.floor(diff / 1000);
-    elD.textContent = Math.floor(s / 86400);
-    elH.textContent = pad(Math.floor(s % 86400 / 3600));
-    elM.textContent = pad(Math.floor(s % 3600 / 60));
-    elS.textContent = pad(s % 60);
-  }
-  cd(); setInterval(cd, 1000);
+          <div id="letter-card-wrap" class="letter-card-wrap">
+            <article id="letter-card" class="letter-card">
+              <div class="letter-lines">
+                <p id="letter-greeting" class="letter-greeting"></p>
+                <p id="letter-opening" class="letter-opening"></p>
+                <p id="letter-body" class="letter-body"></p>
+                <div class="letter-sign-block">
+                  <p id="letter-closing" class="letter-closing"></p>
+                  <p id="letter-signature" class="letter-signature"></p>
+                </div>
+              </div>
+              <div class="letter-stamp" aria-hidden="true">💛</div>
+            </article>
+            <button id="letter-continue-btn" class="primary-pill-btn letter-continue-btn" type="button">
+              My question for you 💍
+            </button>
+          </div>
+        </div>
+      </section>
 
-  /* ---------- wish ---------- */
-  var cake = document.getElementById("cakeSvg"), wishBtn = document.getElementById("wishBtn"),
-      wishMsg = document.getElementById("wishMsg");
-  wishBtn.addEventListener("click", function () {
-    if (cake.classList.contains("out")) {
-      cake.classList.remove("out");
-      wishBtn.textContent = "Blow out the candles";
-      wishMsg.textContent = "Close your eyes, think of your wish, then tap the button.";
-      return;
-    }
-    cake.classList.add("out");
-    wishBtn.textContent = "Light them again";
-    wishMsg.textContent = "May every wish you make come true, Karuna.";
-    bigBurst();
-  });
+      <!-- Scene 10: Grand Proposal & Birthday Finale -->
+      <section id="scene-10" class="scene scene-10" aria-label="Happy Birthday proposal finale">
+        <canvas id="fireworks-canvas" class="fullscreen-canvas"></canvas>
+        <div class="finale-center">
+          <h2 class="finale-headline">
+            <span class="finale-happy">HAPPY</span>
+            <span class="finale-birthday">BIRTHDAY</span>
+          </h2>
+          <p class="finale-name" data-recipient>Karuna!</p>
+          <p class="finale-date-pill">
+            <span data-birthday-date>26 November</span> · <span data-years>8</span> Years of Loving You
+          </p>
 
-  /* ---------- music: a slow music-box melody made in the browser ---------- */
-  var ctx = null, master = null, timer = null, step = 0, nextT = 0, playing = false;
-  var chords = [
-    [261.63, 329.63, 392.00, 523.25, 659.25],
-    [220.00, 261.63, 329.63, 440.00, 523.25],
-    [174.61, 220.00, 261.63, 349.23, 440.00],
-    [196.00, 246.94, 293.66, 392.00, 493.88]
-  ];
-  var arp = [0, 2, 1, 3, 4, 3, 1, 2];
-  var melody = [[659.25, 783.99], [659.25, 587.33], [523.25, 698.46], [587.33, 493.88]];
-  var bass = [130.81, 110.00, 87.31, 98.00];
-  var EIGHTH = 60 / 72 / 2 * 1.0;
+          <div id="proposal-card" class="proposal-card">
+            <p id="proposal-question" class="proposal-question">
+              “After 8 years of loving you in silence… Karuna, will you be mine?”
+            </p>
+            <div id="proposal-actions" class="proposal-actions">
+              <button id="proposal-yes-btn" class="primary-pill-btn proposal-yes-btn" type="button">
+                Yes, forever 💍❤️
+              </button>
+              <button id="proposal-blush-btn" class="blush-pill-btn" type="button">
+                Still blushing 🙈
+              </button>
+            </div>
+            <p id="proposal-response" class="proposal-response" aria-live="polite"></p>
+          </div>
 
-  function tone(freq, t, dur, vol, type) {
-    var o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = type || "sine"; o.frequency.value = freq;
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g); g.connect(master);
-    o.start(t); o.stop(t + dur + 0.05);
-  }
-  function box(freq, t, dur, vol) { tone(freq, t, dur, vol, "sine"); tone(freq * 2, t, dur * 0.4, vol * 0.25, "sine"); }
+          <button id="replay-btn" class="replay-pill-btn" type="button">
+            Replay the Preview <span class="replay-icon">🔄</span>
+          </button>
+        </div>
+        <footer class="finale-footer">
+          Made with <span data-years>8</span> years of love, just for <span data-recipient>Karuna</span> ❤️
+        </footer>
+      </section>
+    </main>
 
-  function schedule() {
-    while (nextT < ctx.currentTime + 0.4) {
-      var bar = Math.floor(step / 8) % 4, beat = step % 8;
-      var c = chords[bar];
-      box(c[arp[beat]], nextT, 1.4, 0.16);
-      if (beat === 0) {
-        tone(bass[bar], nextT, EIGHTH * 8, 0.22, "triangle");
-        tone(c[0] * 1.5, nextT, EIGHTH * 8, 0.05, "sine");
-      }
-      if (beat === 0) box(melody[bar][0], nextT, 2.2, 0.2);
-      if (beat === 4) box(melody[bar][1], nextT, 2.2, 0.18);
-      nextT += EIGHTH; step++;
-    }
-  }
-  function startAudio() {
-    var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return false;
-    if (!ctx) {
-      ctx = new AC();
-      master = ctx.createGain(); master.gain.value = 0.6;
-      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 3200;
-      var dl = ctx.createDelay(1.0); dl.delayTime.value = EIGHTH * 3;
-      var fb = ctx.createGain(); fb.gain.value = 0.38;
-      var wet = ctx.createGain(); wet.gain.value = 0.45;
-      master.connect(lp); lp.connect(ctx.destination);
-      lp.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(ctx.destination);
-    }
-    if (ctx.state === "suspended") ctx.resume();
-    if (!timer) { nextT = ctx.currentTime + 0.15; step = 0; timer = setInterval(schedule, 120); }
-    return true;
-  }
-  var musicBtn = document.getElementById("music"), musicLabel = document.getElementById("musicLabel");
-  function setUI(on) {
-    playing = on;
-    musicBtn.classList.toggle("on", on);
-    musicBtn.setAttribute("aria-pressed", on ? "true" : "false");
-    musicBtn.setAttribute("aria-label", on ? "Pause music" : "Play music");
-    musicLabel.textContent = on ? "Pause music" : "Play music";
-  }
-  function playMusic() { if (startAudio()) setUI(true); }
-  function pauseMusic() { if (ctx) ctx.suspend(); setUI(false); }
-  musicBtn.addEventListener("click", function () { playing ? pauseMusic() : playMusic(); });
-
-  /* ---------- buttons ---------- */
-  document.getElementById("open").addEventListener("click", function () {
-    if (!playing) playMusic();
-    bigBurst();
-    var el = document.getElementById("letter");
-    setTimeout(function () { el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }, 700);
-  });
-  document.getElementById("again").addEventListener("click", function () { bigBurst(); });
-})();
-</script>
-
-</body></html>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
